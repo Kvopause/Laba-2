@@ -4,31 +4,30 @@ using UnityEngine;
 
 public class Moving : MonoBehaviour
 {
-    void Update()
+    public float speed;
+    public Rigidbody rigbd;
+
+    void FixedUpdate()
     {
-        if(Input.GetKey(KeyCode.A))
+        if (Input.GetAxis("Horizontal") == -1)
         {
-            var pos = transform.position;
-            pos.x -= 1f * Time.deltaTime;
-            transform.position = pos;
+            rigbd.AddForce(-speed * Time.deltaTime, 0, 0);
         }
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetAxis("Vertical") == 1)
         {
-            var pos = transform.position;
-            pos.x += 1f * Time.deltaTime;
-            transform.position = pos;
+            rigbd.AddForce(0, 0, speed * Time.deltaTime);
         }
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetAxis("Horizontal") == 1)
         {
-            var pos = transform.position;
-            pos.z += 1f * Time.deltaTime;
-            transform.position = pos;
+            rigbd.AddForce(speed * Time.deltaTime, 0, 0);
         }
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetAxis("Vertical") == -1)
         {
-            var pos = transform.position;
-            pos.z -= 1f * Time.deltaTime;
-            transform.position = pos;
+            rigbd.AddForce(0, 0, -speed * Time.deltaTime);
+        }
+        if (Input.GetKeyDown(KeyCode.Space) && transform.position.y == 0.5)
+        {
+            rigbd.AddForce(0, 500f, 0);
         }
     }
 }
